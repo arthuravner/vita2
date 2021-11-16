@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" lang="en">
+
+<h:head>
+  <f:facet name="first">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+  </f:facet>
+  
+  <h:outputStylesheet library="css" name="primeflex/primeflex.css" />
+  <h:outputStylesheet library="css" name="primeflex/saga-blue.css" />
+  <h:outputStylesheet library="css" name="vita-style.css" />
+    
+  <title><ui:insert name="title">VITA 2.0</ui:insert></title>
+
+</h:head>
+<h:body>
+  <ui:include src="/loading.xhtml" />
+  <div>
+
+    <div class="layout-content-wrapper">
+      <p:messages id="messages" globalOnly="true" showDetail="false" closable="true" />
+      <p:growl id="growl" showDetail="false" life="800" />
+
+      <ui:include src="header.xhtml" />
+
+      <div class="layout-content">
+        <ui:insert name="content"></ui:insert>
+      </div>
+
+      <ui:include src="footer.xhtml"></ui:include>
+    </div>
+
+    <p:ajaxStatus styleClass="layout-ajax-loader">
+      <f:facet name="start">
+        <i class="pi pi-spin pi-spinner layout-ajax-loader-icon" aria-hidden="true"></i>
+      </f:facet>
+
+      <f:facet name="complete">
+        <h:outputText value="" />
+      </f:facet>
+    </p:ajaxStatus>
+
+    <div class="layout-mask modal-in"></div>
+  </div>
+
+</h:body>
+
+</html>

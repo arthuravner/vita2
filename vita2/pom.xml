@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+ <modelVersion>4.0.0</modelVersion>
+ <groupId>br.cefetrj</groupId>
+ <artifactId>vita2</artifactId>
+ <version>1.0.0-SNAPSHOT</version>
+ <packaging>war</packaging>
+ <name>VITA 2.0</name>
+
+ <properties>
+  <maven.compiler.source>1.8</maven.compiler.source>
+  <maven.compiler.target>1.8</maven.compiler.target>
+ </properties>
+
+
+ <dependencyManagement>
+  <dependencies>
+   <dependency>
+    <groupId>org.wildfly.bom</groupId>
+    <artifactId>wildfly-jakartaee8-with-tools</artifactId>
+    <version>21.0.1.Final</version>
+    <type>pom</type>
+    <scope>import</scope>
+   </dependency>
+  </dependencies>
+ </dependencyManagement>
+ <dependencies>
+
+  <dependency>
+   <groupId>javax</groupId>
+   <artifactId>javaee-api</artifactId>
+   <version>8.0</version>
+  </dependency>
+
+  <!-- Import the CDI API, we use provided scope as the API is included in JBoss EAP -->
+  <dependency>
+   <groupId>jakarta.enterprise</groupId>
+   <artifactId>jakarta.enterprise.cdi-api</artifactId>
+   <scope>provided</scope>
+  </dependency>
+
+  <!-- Import the JPA API, we use provided scope as the API is included in JBoss EAP -->
+  <dependency>
+   <groupId>jakarta.persistence</groupId>
+   <artifactId>jakarta.persistence-api</artifactId>
+   <scope>provided</scope>
+  </dependency>
+
+  <!-- Import the Common Annotations API (JSR-250), we use provided scope as the API is included in JBoss EAP -->
+  <dependency>
+   <groupId>org.jboss.spec.javax.annotation</groupId>
+   <artifactId>jboss-annotations-api_1.3_spec</artifactId>
+   <scope>provided</scope>
+  </dependency>
+
+  <!-- Import the EJB API, we use provided scope as the API is included in JBoss EAP -->
+  <dependency>
+   <groupId>org.jboss.spec.javax.ejb</groupId>
+   <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+   <scope>provided</scope>
+  </dependency>
+
+  <!-- Import the JSF API, we use provided scope as the API is included in JBoss EAP -->
+  <dependency>
+   <groupId>org.jboss.spec.javax.faces</groupId>
+   <artifactId>jboss-jsf-api_2.3_spec</artifactId>
+   <scope>provided</scope>
+  </dependency>
+
+  <!-- Import the JTA API, we use provided scope as the API is included in JBoss EAP -->
+  <dependency>
+   <groupId>org.jboss.spec.javax.transaction</groupId>
+   <artifactId>jboss-transaction-api_1.3_spec</artifactId>
+   <scope>provided</scope>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
+  <dependency>
+   <groupId>org.primefaces</groupId>
+   <artifactId>primefaces</artifactId>
+   <version>10.0.0</version>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+  <dependency>
+   <groupId>javax.servlet</groupId>
+   <artifactId>javax.servlet-api</artifactId>
+   <version>4.0.1</version>
+   <scope>provided</scope>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+  <dependency>
+   <groupId>org.apache.commons</groupId>
+   <artifactId>commons-lang3</artifactId>
+   <version>3.12.0</version>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+  <dependency>
+   <groupId>org.apache.commons</groupId>
+   <artifactId>commons-collections4</artifactId>
+   <version>4.4</version>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+  <dependency>
+   <groupId>commons-codec</groupId>
+   <artifactId>commons-codec</artifactId>
+   <version>1.15</version>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/org.primefaces.extensions/primefaces-extensions -->
+  <dependency>
+   <groupId>org.primefaces.extensions</groupId>
+   <artifactId>primefaces-extensions</artifactId>
+   <version>10.0.4</version>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/com.azure/azure-ai-textanalytics -->
+  <dependency>
+   <groupId>com.azure</groupId>
+   <artifactId>azure-ai-textanalytics</artifactId>
+   <version>5.0.5</version>
+  </dependency>
+
+ </dependencies>
+
+ <build>
+  <!-- Set the name of the WAR, used as the context root when the app is deployed -->
+  <finalName>${project.artifactId}</finalName>
+ </build>
+</project>

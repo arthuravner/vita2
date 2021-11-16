@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" lang="en">
+
+<f:metadata>
+  <f:viewAction action="#{avaliacaoBean.viewAction()}">
+  </f:viewAction>
+</f:metadata>
+
+<h:head>
+  <f:facet name="first">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+  </f:facet>
+  <title><ui:insert name="title">VITA 2.0</ui:insert></title>
+</h:head>
+<h:body>
+    <ui:include src="/loading.xhtml" /> 
+    <h:form id="formAvaliacao">    
+    <p:messages id="msgAvaliacao" closable="false" showDetail="false" />
+
+    <div class="ui-g">
+      <div class="ui-g-1" />
+      <div class="ui-g-10">
+        <h:panelGroup rendered="#{not (avaliacaoBean.enviada or avaliacaoBean.linkAvaliacao eq null)}">
+
+          <div class="card" align="center" style="display: block;">
+            <p:panelGrid layout="flex" columns="1" styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+
+              <p:outputLabel value="#{avaliacaoBean.linkAvaliacao.turma.nome}" />
+
+              <p:outputLabel value="#{avaliacaoBean.linkAvaliacao.descricao}" />
+
+              <p:outputLabel value=" Que nota você da para a aula?" />
+              <p:rating value="#{avaliacaoBean.avaliacao.nota}" cancel="false" />
+
+
+              <p:outputLabel value="Identifique-se" rendered="#{avaliacaoBean.linkAvaliacao.comIdentificacao and false}"
+                style="display:block; text-align:right" />
+              <p:inputText value="#{avaliacaoBean.avaliacao.aluno}" size="20" placeholder="Identifique-se"
+                rendered="#{avaliacaoBean.linkAvaliacao.comIdentificacao}" />
+
+              <p:outputLabel value="Descreva um breve comentário sobre a aula" style="display:block; text-align:right" rendered="#{false}" />
+
+              <p:inputTextarea rows="10" autoResize="false" placeholder="Descreva um breve comentário sobre a aula" style="width:80%;" 
+                value="#{avaliacaoBean.avaliacao.texto}" />                             
+
+            </p:panelGrid>
+          </div>
+
+          <div align="center" style="display: block;">
+            <p:commandButton action="#{avaliacaoBean.enviar()}" value="Enviar" update="formAvaliacao" icon="fa fa-send" title="Enviar"
+              style="text-align:center; display:block;" />
+          </div>
+        </h:panelGroup>
+      </div>
+    </div>
+    <p:panel rendered="#{avaliacaoBean.enviada}">
+      <p:outputLabel value="Pesquisa enviada com sucesso! Obrigado." style="display:block; text-align:center" />
+    </p:panel>
+
+    <p:panel rendered="#{avaliacaoBean.linkAvaliacao eq null}">
+      <p:outputLabel value="Pesquisa de satisfação indisponível." style="display:block; text-align:center" />
+    </p:panel>
+
+  </h:form>
+
+</h:body>
+</html>

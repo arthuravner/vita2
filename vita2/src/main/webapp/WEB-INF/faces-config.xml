@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.3" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
+
+ <navigation-rule>
+  <from-view-id />
+  <navigation-case>
+   <from-outcome>LOGIN</from-outcome>
+   <to-view-id>/login.xhtml</to-view-id>
+   <redirect />
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>HOME</from-outcome>
+   <to-view-id>/app/views/home.xhtml</to-view-id>
+   <redirect />
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>APP_SATISFACAO</from-outcome>
+   <to-view-id>/app/views/satisfacao.xhtml</to-view-id>
+   <redirect />
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>APP_DASHBOARD</from-outcome>
+   <to-view-id>/app/views/dashboard.xhtml</to-view-id>
+   <redirect />
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>APP_TURMA</from-outcome>
+   <to-view-id>/app/views/turma.xhtml</to-view-id>
+   <redirect />
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>ADMIN_USUARIOS</from-outcome>
+   <to-view-id>/app/admin/adm_usuarios.xhtml</to-view-id>
+   <redirect />
+  </navigation-case>
+ </navigation-rule>
+
+</faces-config>
+
+ 

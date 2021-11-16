@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="../template/_template.xhtml">
+
+  <ui:define name="content">
+    <script type="text/javascript">
+    function skinRadarChart() {
+        Chart.defaults.global.startAngle = 36;
+        Chart.defaults.global.tooltips.cornerRadius = 3;
+        Chart.defaults.global.tooltips.enabled = true;
+        Chart.defaults.global.tooltips.mode = 'point';
+        Chart.defaults.global.tooltips.position = 'nearest';
+    }
+
+</script>
+
+    <div class="card">
+      <h:form>
+        <p:breadCrumb>
+          <p:menuitem value="Home" action="HOME" ajax="false" />
+          <p:menuitem value="Dashboard" action="#" ajax="false" style="font-weight: bold;"/>
+        </p:breadCrumb>
+      </h:form>
+    </div>
+
+    <h:form>
+
+      <p:panelGrid id="panelFiltro" columns="4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
+        style="border:0px none; background-color:transparent;">
+        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-8">
+        <h:outputText for="@next" value="Turma" />
+        <p:selectOneMenu id="turmas" value="#{dashboardBean.idTurmaSelecionada}">
+          <f:selectItem itemLabel="-- Selecione uma turma --" itemValue="" />
+          <f:selectItems value="#{dashboardBean.turmas}" var="turma" itemLabel="#{turma}" itemValue="#{turma.id}" />
+        </p:selectOneMenu>
+        </p:panelGrid>
+      </p:panelGrid>
+
+      <p:panelGrid id="panelAcoes" columns="1" layout="grid">
+        <h:panelGroup>
+          <p:commandButton title="Aplicar filtro" value="Aplicar filtro" icon="fa fa-check" action="#{dashboardBean.aplicarFiltro()}"
+            update="messages lineModel radarModel mediaGeral" />
+          <p:spacer />
+        </h:panelGroup>
+      </p:panelGrid>
+
+      <p:divider />
+
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-lg-4 ui-g-nopad">
+          <div class="ui-g-12">
+            <p:panelGrid layout="grid" columns="1">
+              <p:outputLabel value="Média staisfação no período" style="display: block; text-align: center;" />
+              <p:outputLabel id="mediaGeral" value="#{dashboardBean.vo.mediaGeral}"
+                style="font-size: 3.0rem; font-weight: 600; display: block; text-align: center;">
+                <f:convertNumber pattern="##0.00" />
+              </p:outputLabel>
+            </p:panelGrid>
+
+          </div>
+          <div class="ui-g-12">
+            <p:radarChart id="radarModel" model="#{dashboardBean.vo.radarModel}" />
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-8">
+          <p:lineChart id="lineModel" model="#{dashboardBean.vo.lineModel}" />
+        </div>
+      </div>
+    </h:form>
+  </ui:define>
+</ui:composition>

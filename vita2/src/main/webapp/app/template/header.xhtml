@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+  <h:form id="formMenu">
+    <p:menubar rendered="#{not mainBean.inMobile}">
+      <p:submenu label="Administração" rendered="#{mainBean.admin}">
+        <p:menuitem value="Usuários" action="ADMIN_USUARIOS" ajax="false" style="margin-top: 5px;" rendered="#{mainBean.admin}" />
+      </p:submenu>
+
+      <p:menuitem value="Turmas" action="APP_TURMA" ajax="false" style="margin-top: 5px;" />
+
+      <p:menuitem value="Satisfação" action="APP_SATISFACAO" ajax="false" style="margin-top: 5px;" />
+
+      <p:menuitem value="Dashboards" action="APP_DASHBOARD" ajax="false" style="margin-top: 5px;" />
+
+      <f:facet name="options">
+
+        <h:panelGroup>
+          <p:menuButton value="#{mainBean.usuario.nome}" icon="fa fa-user-o">
+            <p:menuitem value="Alterar senha" actionListener="#{gestaoUsuariosBean.edita(mainBean.usuario)}" oncomplete="PF('dlgTrocaSenha').show()"
+              update="dlgTrocaSenha" />
+          </p:menuButton>
+
+          <p:spacer width="10px" />
+
+          <p:commandButton title="Sair" action="#{logoutBacking.submit}" icon="fa fa-sign-out" />
+
+        </h:panelGroup>
+
+      </f:facet>
+
+
+    </p:menubar>
+
+
+    <h:panelGroup rendered="#{mainBean.inMobile}">
+      <p:menuButton icon="fa fa-bars">
+
+        <p:menuitem value="Usuários" action="ADMIN_USUARIOS" ajax="false" style="margin-top: 5px;" rendered="#{mainBean.admin}" />
+
+        <p:divider />
+
+        <p:menuitem value="Turmas" action="APP_TURMA" ajax="false" style="margin-top: 5px;" />
+
+        <p:menuitem value="Satisfação" action="APP_SATISFACAO" ajax="false" style="margin-top: 5px;" />
+
+        <p:menuitem value="Dashboards" action="APP_DASHBOARD" ajax="false" style="margin-top: 5px;" />
+
+      </p:menuButton>
+
+      <p:spacer width="10px" />
+
+      <p:menuButton value="#{mainBean.usuario.nome}" icon="fa fa-user-o">
+        <p:menuitem value="Alterar senha" actionListener="#{gestaoUsuariosBean.edita(mainBean.usuario)}" oncomplete="PF('dlgTrocaSenha').show()"
+          update="dlgTrocaSenha" />
+
+        <p:menuitem value="Sair" action="#{logoutBacking.submit}" icon="fa fa-sign-out" ajax="false" style="margin-top: 5px;" />
+      </p:menuButton>
+
+    </h:panelGroup>
+
+
+  </h:form>
+
+  <ui:include src="/_trocaSenha.xhtml" />
+
+</ui:composition>

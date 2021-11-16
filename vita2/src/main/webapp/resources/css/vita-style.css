@@ -1,0 +1,30 @@
+body .ui-breadcrumb {
+	border: none;
+	font-size: 14px;
+}
+
+body .ui-widget {
+	font-size: 14px;
+}
+
+body .ui-panelgrid .ui-panelgrid-cell {
+	border: 1px solid #dee2e6;
+	background: #ffffff;
+	color: #495057;
+	padding: 0.25rem;
+}
+
+body .ui-button.ui-button-secondary, body .ui-splitbutton.ui-button-secondary>.ui-button
+	{
+	background: #607D8B;
+	color: #ffffff;
+	border: 1px solid #607D8B;
+}
+
+body .ui-inputfield {
+	padding: 0.3rem 0.3rem;
+}
+
+body .ui-fluid .ui-selectonemenu-label {
+	padding: 0.3rem 0.3rem;
+}

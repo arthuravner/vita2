@@ -1,0 +1,30 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+
+  <p:dialog header="Alterar senha #{gestaoUsuariosBean.usuarioSelecionado.nome}" id="dlgTrocaSenha" widgetVar="dlgTrocaSenha" responsive="true"
+    closeOnEscape="true" modal="true" draggable="false" appendTo="@(body)">
+    <p:scrollPanel mode="native">
+      <h:form id="formTrocaSenha">
+        <p:messages id="msgTrocaSenha" showDetail="false" closable="true" />
+        <p:panelGrid layout="grid" columns="2" columnClasses="ui-g-12 ui-md-4 ui-lg-4, ui-g-12 ui-md-8 ui-lg-8">
+
+          <h:outputText value="Senha atual" rendered="#{not mainBean.admin}" />
+          <p:password value="#{gestaoUsuariosBean.usuarioSelecionado.senhaAtual}" rendered="#{not mainBean.admin}" />
+
+          <h:outputText value="Nova senha" />
+          <p:password value="#{gestaoUsuariosBean.usuarioSelecionado.novaSenha}" />
+
+          <h:outputText value="Confirma nova senha" />
+          <p:password value="#{gestaoUsuariosBean.usuarioSelecionado.confirmaNovaSenha}" />
+
+        </p:panelGrid>
+        <p:divider />
+        <h:panelGrid columns="2">
+          <p:commandButton action="#{gestaoUsuariosBean.trocaSenha()}" value="Confirmar" update="messages" icon="fa fa-save" title="Confirma" />
+          <p:commandButton icon="fa fa-close" type="button" value="Cancelar" styleClass="RedButton" onclick="PF('dlgTrocaSenha').hide();" />
+        </h:panelGrid>
+      </h:form>
+    </p:scrollPanel>
+  </p:dialog>
+
+</ui:fragment>

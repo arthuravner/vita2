@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+  template="../template/_template.xhtml">
+
+  <ui:define name="content">
+    <div class="card">
+      <h:form>
+        <p:breadCrumb>
+          <p:menuitem value="Home" action="HOME" ajax="false" />
+          <p:menuitem value="Turmas" action="#" ajax="false" style="font-weight: bold;" />
+        </p:breadCrumb>
+      </h:form>
+    </div>
+
+    <h:form id="formTurmas">
+
+      <p:panelGrid id="panelFiltro" columns="4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
+        style="border:0px none; background-color:transparent;">
+        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-8">
+          <h:outputText value="Nome" />
+          <p:inputText value="#{turmaBean.filtro.nome}" />
+        </p:panelGrid>       
+             
+        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-8">
+          <h:outputText value="Ano - Período" />
+          <h:panelGroup>
+            <p:inputNumber value="#{turmaBean.filtro.ano}" maxValue="2050" size="4" decimalPlaces="0" thousandSeparator="" />
+            <h:outputLabel value=" - " />
+            <p:inputNumber value="#{turmaBean.filtro.periodo}" minValue="1" maxValue="2" size="1" decimalPlaces="0" thousandSeparator="" />
+          </h:panelGroup>
+        </p:panelGrid>
+      </p:panelGrid>
+
+      <p:panelGrid id="panelAcoes" columns="1" layout="grid">
+        <h:panelGroup>
+          <p:commandButton title="Aplicar filtro" value="Aplicar filtro" icon="fa fa-check" action="#{turmaBean.aplicarFiltro()}"
+            update="tbTurma messages" />
+          <p:spacer />
+          <p:commandButton title="Nova turma" value="Nova turma" icon="fa fa-plus-circle" action="#{turmaBean.editaTurma(null)}" update="dlgTurma"
+            oncomplete="PF('dlgTurma').show()" styleClass="ui-button-secondary" />
+        </h:panelGroup>
+
+      </p:panelGrid>
+
+      <p:divider />
+
+      <p:dataTable id="tbTurma" var="turma" value="#{turmaBean.turmas}" reflow="true" paginatorPosition="bottom" paginator="true" rows="5"
+        rowKey="#{turma.id}">
+
+        <p:column headerText="Nome">
+          <h:outputText value="#{turma.nome}" />
+        </p:column>
+
+        <p:column headerText="Ano">
+          <h:outputText value="#{turma.ano}" />
+        </p:column>
+
+        <p:column headerText="Período">
+          <h:outputText value="#{turma.periodo}" />
+        </p:column>
+
+        <p:column headerText="Ações">
+
+          <p:commandButton title="Links avaliação" icon="fa fa-list" actionListener="#{turmaBean.onSelectTurma(turma)}"
+            oncomplete="PF('dlgLinks').show()" update="dlgLinks" />
+
+          <p:spacer width="5px" />
+
+          <p:commandButton title="Editar turma" icon="fa fa-pencil" oncomplete="PF('dlgTurma').show()" update="dlgTurma">
+            <f:setPropertyActionListener value="#{turma}" target="#{turmaBean.turma}" />
+          </p:commandButton>
+
+          <p:spacer width="5px" />
+
+          <p:commandButton icon="fa fa-trash" title="Excluir" oncomplete="PF('dlgExclusao').show()">
+            <f:setPropertyActionListener value="#{turma}" target="#{turmaBean.turma}" />
+          </p:commandButton>
+
+        </p:column>
+
+      </p:dataTable>
+
+    </h:form>
+
+    <p:dialog header="Turma" id="dlgTurma" widgetVar="dlgTurma" responsive="true" closeOnEscape="true" modal="true" draggable="false"
+      appendTo="@(body)">
+      
+        <h:form id="formEditTurma">
+          <p:messages id="msgTurma" showDetail="false" closable="true" />
+
+          <p:panelGrid layout="grid" columns="2" columnClasses="ui-g-12 ui-md-4 ui-lg-4, ui-g-12 ui-md-8 ui-lg-8">
+            <h:outputText value="Nome" />
+            <p:inputText value="#{turmaBean.turma.nome}" />
+            <h:outputText value="Ano" />
+            <p:inputNumber value="#{turmaBean.turma.ano}" maxValue="2050" decimalPlaces="0" size="4" decimalSeparator="" thousandSeparator="" />
+            <h:outputText value="Período" />
+            <p:inputNumber value="#{turmaBean.turma.periodo}" minValue="1" maxValue="2" decimalPlaces="0" size="1" decimalSeparator=""
+              thousandSeparator="" />
+          </p:panelGrid>
+
+          <h:panelGrid columns="2">
+            <p:commandButton action="#{turmaBean.salvar()}" value="Confirmar" update="formTurmas:tbTurma formEditTurma" icon="fa fa-save"
+              title="Confirma" />
+
+            <p:commandButton icon="fa fa-close" type="button" value="Cancelar" styleClass="RedButton" onclick="PF('dlgTurma').hide();" />
+          </h:panelGrid>
+
+        </h:form>
+      
+    </p:dialog>
+
+    <p:dialog header="Links de avaliação" id="dlgLinks" widgetVar="dlgLinks" responsive="true" closeOnEscape="true" modal="true" draggable="false"
+      style="overflow-y:auto; top:5px; bottom:5px;" appendTo="@(body)">
+      <p:scrollPanel mode="native">
+        <h:form id="formLinks">
+          <p:messages id="msgLinks" showDetail="false" closable="true" />
+
+          <p:panelGrid id="panelFiltro" columns="4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
+            style="border:0px none; background-color:transparent;">
+            <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-8">
+              <h:outputText value="Descrição" />
+              <p:inputText value="#{turmaBean.filtroLink.descricao}" />
+            </p:panelGrid>
+          </p:panelGrid>
+
+          <p:panelGrid id="panelAcoes" columns="1" layout="grid">
+            <h:panelGroup>
+              <p:commandButton title="Aplicar filtro" value="Aplicar filtro" icon="fa fa-check" action="#{turmaBean.carregaLinks()}"
+                update="tbLinks msgLinks" />
+              <p:spacer />
+              <p:commandButton title="Novo link de avaliação" value="Novo link" icon="fa fa-plus-circle" actionListener="#{turmaBean.novoLink()}"
+                update="formLink" oncomplete="PF('dlgLink').show()" styleClass="ui-button-secondary" />
+            </h:panelGroup>
+          </p:panelGrid>
+
+          <p:divider />
+
+          <p:dataTable id="tbLinks" value="#{turmaBean.links}" var="link" paginatorPosition="bottom" paginator="true" rows="5" rowKey="#{link.id}"
+            reflow="true" resizableColumns="true">
+
+            <p:column headerText="Data aula">
+              <h:outputText value="#{link.dataAula}">
+                <f:convertDateTime pattern="dd/MM/yyyy" />
+              </h:outputText>
+            </p:column>
+
+            <p:column headerText="Descrição">
+              <h:outputText value="#{link.descricao}" />
+            </p:column>
+
+            <p:column headerText="Ident.">
+              <h:outputText value="Sim" rendered="#{link.comIdentificacao}" />
+              <h:outputText value="Não" rendered="#{not link.comIdentificacao}" />
+            </p:column>
+
+            <p:column headerText="Validade">
+              <h:outputText value="#{link.dataValidadeLink}">
+                <f:convertDateTime pattern="dd/MM/yyyy" />
+              </h:outputText>
+            </p:column>
+
+            <p:column headerText="Copiar link">
+              <p:commandButton id="btnAjaxCopy" icon="fa fa-copy" onclick="return false;" />
+              <pe:clipboard id="clipAjax" trigger="btnAjaxCopy" action="copy" text="#{turmaBean.getUrl(link)}">
+                <p:ajax event="success" listener="#{turmaBean.successListener}" update="growl" />
+                <p:ajax event="error" listener="#{turmaBean.errorListener}" />
+              </pe:clipboard>
+            </p:column>
+
+            <p:column headerText="Respostas">
+              <h:outputText value="#{link.countAvaliacoes}" />
+            </p:column>
+
+            <p:column headerText="Ações" width="15%">
+              <p:commandButton title="Editar link" icon="fa fa-pencil" oncomplete="PF('dlgLink').show()" update="dlgLink">
+                <f:setPropertyActionListener value="#{link}" target="#{turmaBean.linkSelecionado}" />
+              </p:commandButton>
+
+              <p:spacer />
+
+              <p:button title="Visualizar respostas" icon="fa fa-table" href="#{link.linkRelatorio}" target="_blank" />
+
+            </p:column>
+          </p:dataTable>
+
+        </h:form>
+      </p:scrollPanel>
+    </p:dialog>
+
+    <p:dialog header="Link avaliação" id="dlgLink" widgetVar="dlgLink" responsive="true" closeOnEscape="true" modal="true" draggable="false"
+      appendTo="@(body)">
+      <p:scrollPanel mode="native">
+        <h:form id="formLink">
+          <p:messages id="msgLink" showDetail="false" closable="true" />
+
+          <p:panelGrid columns="1" layout="grid">
+            <p:panelGrid columns="2" layout="grid" columnClasses="ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-6">
+              <h:outputText value="Descrição " />
+              <p:inputText value="#{turmaBean.linkSelecionado.descricao}" placeholder="Ex.: Conteúdo dado" />
+              <h:outputText value="Data da aula*" />
+              <p:calendar value="#{turmaBean.linkSelecionado.dataAula}" locale="pt_BR" pattern="dd/MM/yyyy" />
+              <h:outputText value="Validade*" />
+              <p:calendar value="#{turmaBean.linkSelecionado.dataValidadeLink}" mindate="today" locale="pt_BR" pattern="dd/MM/yyyy" />
+            </p:panelGrid>
+            <p:panelGrid columns="1" layout="grid">
+              <p:selectBooleanCheckbox value="#{turmaBean.linkSelecionado.comIdentificacao}" itemLabel="Exigir identificação?"
+                disabled="#{not (turmaBean.linkSelecionado.hashlink eq null)}" />
+            </p:panelGrid>
+
+          </p:panelGrid>
+
+          <p:divider />
+          <h:panelGrid columns="2">
+            <p:commandButton title="Gerar link" value="Gerar link" icon="fa fa-link" actionListener="#{turmaBean.salvarLink()}"
+              update="msgLink formLink formLinks:tbLinks" rendered="#{turmaBean.linkSelecionado.hashlink eq null}" />
+            <p:commandButton icon="fa fa-save" value="Confirmar" actionListener="#{turmaBean.salvarLink()}" update="msgLink formLink"
+              rendered="#{not (turmaBean.linkSelecionado.hashlink eq null)}" />
+            <p:commandButton icon="fa fa-close" value="Cancelar" type="button" onclick="PF('dlgLink').hide();" />
+          </h:panelGrid>
+
+        </h:form>
+      </p:scrollPanel>
+    </p:dialog>
+
+    <p:confirmDialog widgetVar="dlgExclusao" severity="alert" header="Confirmação exclusão"
+      message="Tem certeza que quer excluir a turma #{turmaBean.turma.nome}?" appendTo="@(body)">
+      <h:form>
+        <p:commandButton value="Sim" onclick="PF('dlgExclusao').hide()" action="#{turmaBean.excluir}" update="formTurmas:tbTurma" />
+        <p:commandButton value="Não" onclick="PF('dlgExclusao').hide()" styleClass="RedButton" />
+      </h:form>
+    </p:confirmDialog>
+
+  </ui:define>
+
+</ui:composition>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <f:facet name="first">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+  </f:facet>
+
+  <h:outputStylesheet name="css/primeflex/primeflex.css" />
+  <h:outputStylesheet name="css/primeflex/saga-blue.css" />
+
+  <title>Vita 2.0</title>
+</h:head>
+
+<h:body>
+  <ui:include src="/loading.xhtml" />
+
+  <p:spacer height="100" />
+
+  <div class="flex align-items-center justify-content-center">
+    <div class="surface-card p-4 shadow-2 border-round w-full lg:w-4">
+      <div class="text-center mb-5">
+        <div class="text-900 text-3xl font-medium mb-3" style="font-weight: bold;">VITA 2.0</div>
+      </div>
+      <div>
+        <h:form>
+          <p:messages id="msg"/>
+          <p:inputText name="j_username" value="#{loginBacking.login}" styleClass="w-full mb-3" placeholder="Usuário" />
+          <p:inputText id="j_password" type="password" styleClass="w-full mb-3" value="#{loginBacking.password}" placeholder="Senha" />
+          <p:commandButton id="submit" update="@form" value="A C E S S A R" action="#{loginBacking.submit}" ajax="false" icon="pi pi-user"
+            styleClass="w-full" style="font-weight: bold;" />
+        </h:form>
+      </div>
+    </div>
+  </div>
+</h:body>
+
+</html>

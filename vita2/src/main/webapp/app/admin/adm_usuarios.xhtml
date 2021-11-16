@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="../template/_template.xhtml">
+
+  <ui:define name="content">
+    <div class="card">
+      <h:form>
+        <p:breadCrumb>
+          <p:menuitem value="Home" action="HOME" ajax="false" />
+          <p:menuitem value="Administração" action="#" ajax="false" />
+          <p:menuitem value="Usuários" action="#" ajax="false" style="font-weight: bold;" />
+        </p:breadCrumb>
+      </h:form>
+    </div>
+
+    <h:form id="formAdmUsuarios">
+      <p:panelGrid id="panelFiltro" columns="4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
+        style="border:0px none; background-color:transparent;">
+        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-8">
+          <h:outputText value="Nome" />
+          <p:inputText value="#{gestaoUsuariosBean.filtro.nome}" />
+        </p:panelGrid>
+        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-8">
+          <h:outputText value="E-mail" />
+          <p:inputText value="#{gestaoUsuariosBean.filtro.email}" />
+        </p:panelGrid>
+        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-8">
+          <h:outputText value="Login" />
+          <p:inputText value="#{gestaoUsuariosBean.filtro.login}" />
+        </p:panelGrid>
+      </p:panelGrid>
+
+      <p:panelGrid id="panelAcoes" columns="1" layout="grid">
+        <h:panelGroup>
+          <p:commandButton title="Aplicar filtro" value="Aplicar filtro" icon="fa fa-check" action="#{gestaoUsuariosBean.aplicarFiltro()}"
+            update="tbUsuarios messages" />
+          <p:spacer />
+          <p:commandButton title="Novo usuário" value="Novo usuário" icon="fa fa-plus-circle" actionListener="#{gestaoUsuariosBean.novo()}"
+            update="dlgEdicaoUsuario" oncomplete="PF('dlgEdicaoUsuario').show()" styleClass="ui-button-secondary" />
+        </h:panelGroup>
+      </p:panelGrid>
+
+      <p:divider />
+
+      <p:dataTable id="tbUsuarios" var="usuario" value="#{gestaoUsuariosBean.usuarios}" paginatorPosition="bottom" paginator="true" rows="5"
+        rowKey="#{usuario.id}" reflow="true">
+
+        <p:column headerText="Nome">
+          <h:outputText value="#{usuario.nome}" />
+        </p:column>
+
+        <p:column headerText="E-mail">
+          <h:outputText value="#{usuario.email}" />
+        </p:column>
+
+        <p:column headerText="Login">
+          <h:outputText value="#{usuario.login}" />
+        </p:column>
+
+        <p:column headerText="Nível acesso">
+          <h:outputText value="#{usuario.nivelDeAcesso.value}" />
+        </p:column>
+
+        <p:column headerText="Ações">
+
+          <p:commandButton title="Editar usuário" icon="pi pi-user-edit" oncomplete="PF('dlgEdicaoUsuario').show()" update="dlgEdicaoUsuario">
+            <f:setPropertyActionListener value="#{usuario}" target="#{gestaoUsuariosBean.usuarioSelecionado}" />
+          </p:commandButton>
+
+          <p:spacer width="5px" />
+
+          <p:commandButton title="Trocar senha" icon="fa fa-key" oncomplete="PF('dlgTrocaSenha').show()" update="dlgTrocaSenha">
+            <f:setPropertyActionListener value="#{usuario}" target="#{gestaoUsuariosBean.usuarioSelecionado}" />
+          </p:commandButton>
+
+          <p:spacer width="5px" />
+
+          <p:commandButton icon="fa fa-trash" title="Excluir" oncomplete="PF('dlgExclusao').show()">
+            <f:setPropertyActionListener value="#{usuario}" target="#{gestaoUsuariosBean.usuarioSelecionado}" />
+          </p:commandButton>
+
+        </p:column>
+
+      </p:dataTable>
+    </h:form>
+
+    <p:dialog header="Usuário" id="dlgEdicaoUsuario" widgetVar="dlgEdicaoUsuario" responsive="true" closeOnEscape="true" modal="true"
+      draggable="false" appendTo="@(body)">
+      <p:scrollPanel mode="native">
+        <h:form id="formEditUsuario">
+          <p:messages id="msgUsuario" showDetail="false" closable="true" />
+          <p:panelGrid layout="grid" columns="2" columnClasses="ui-g-12 ui-md-4 ui-lg-4, ui-g-12 ui-md-8 ui-lg-8">
+            <h:outputText value="Nome" />
+            <p:inputText value="#{gestaoUsuariosBean.usuarioSelecionado.nome}" />
+
+            <h:outputText value="E-mail" />
+            <p:inputText value="#{gestaoUsuariosBean.usuarioSelecionado.email}" />
+
+            <h:outputText value="Login" />
+            <p:inputText value="#{gestaoUsuariosBean.usuarioSelecionado.login}" />
+
+            <h:outputText value="Senha temporária" rendered="#{gestaoUsuariosBean.usuarioSelecionado.id eq nul}" />
+            <p:password value="#{gestaoUsuariosBean.usuarioSelecionado.edicaoSenha}" rendered="#{gestaoUsuariosBean.usuarioSelecionado.id eq nul}" />
+
+            <p:outputLabel for="@next" value="Nível de acesso" />
+            <p:selectOneMenu value="#{gestaoUsuariosBean.nivelAcessoSelecionado}">
+              <f:selectItems value="#{gestaoUsuariosBean.niveisAcesso}" var="nivel" itemValue="#{nivel}" />
+            </p:selectOneMenu>
+          </p:panelGrid>
+          <p:divider />
+          <h:panelGrid columns="2">
+            <p:commandButton action="#{gestaoUsuariosBean.salvar()}" value="Confirmar" update="msgUsuario" icon="fa fa-save" title="Confirma" />
+            <p:commandButton icon="fa fa-close" type="button" value="Cancelar" styleClass="RedButton" onclick="PF('dlgEdicaoUsuario').hide();" />
+          </h:panelGrid>
+        </h:form>
+      </p:scrollPanel>
+    </p:dialog>
+
+    <p:confirmDialog widgetVar="dlgExclusao" severity="alert" header="Confirmação exclusão"
+      message="Tem certeza que quer excluir este usuário #{gestaoUsuariosBean.usuarioSelecionado.nome}?" appendTo="@(body)">
+      <h:form>
+        <p:commandButton value="Sim" onclick="PF('dlgExclusao').hide()" action="#{gestaoUsuariosBean.excluir}" update="formAdmUsuarios:tbUsuarios" />
+        <p:commandButton value="Não" onclick="PF('dlgExclusao').hide()" styleClass="RedButton" />
+      </h:form>
+    </p:confirmDialog>
+
+  </ui:define>
+
+</ui:composition>

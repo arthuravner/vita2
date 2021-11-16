@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="./app/template/_template.xhtml">
+
+	<ui:define name="titulo">
+		<p:outputPanel>Vita 2.0 teste</p:outputPanel>
+	</ui:define>
+
+	<ui:define name="content">
+		<p:outputLabel>Welcome to the application!</p:outputLabel>
+
+		<p>Logged-in as #{request.userPrincipal.name}</p>
+
+		<h:form>
+			<p:commandButton value="Logout" action="#{logoutBacking.submit}" />
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

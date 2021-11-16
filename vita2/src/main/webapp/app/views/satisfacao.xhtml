@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="../template/_template.xhtml">
+
+  <ui:define name="content">
+    <f:metadata>
+      <f:viewAction action="#{satisfacaoBean.viewAction()}">
+      </f:viewAction>
+    </f:metadata>
+
+    <div class="card">
+      <h:form>
+        <p:breadCrumb>
+          <p:menuitem value="Home" action="HOME" ajax="false" />
+          <p:menuitem value="Satisfação" action="#" ajax="false" style="font-weight: bold;" />
+        </p:breadCrumb>
+      </h:form>
+    </div>
+
+    <h:form id="formSatisfacao">
+
+      <p:panelGrid id="panelFiltro" columns="4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
+        style="border:0px none; background-color:transparent;">
+        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-8">
+          <h:outputText for="@next" value="Turma" />
+          <p:selectOneMenu value="#{satisfacaoBean.filtro.turmaId}">
+            <p:ajax event="change" listener="#{satisfacaoBean.onSelectTurma()}" update="links"/>
+            <f:selectItem itemLabel="-- Selecione a turma --" noSelectionOption="true" />
+            <f:selectItems value="#{satisfacaoBean.turmas}" var="turma" itemLabel="#{turma}" itemValue="#{turma.id}" />
+          </p:selectOneMenu>
+          <h:outputText for="@next" value="Link de avaliação" />
+          <p:selectOneMenu id="links" value="#{satisfacaoBean.filtro.linkId}">
+            <f:selectItem itemLabel="-- Selecione o link --" noSelectionOption="true" />
+            <f:selectItems value="#{satisfacaoBean.links}" var="link" itemLabel="#{link.descricaoCompleta}" itemValue="#{link.id}" />
+          </p:selectOneMenu>          
+        </p:panelGrid>
+      </p:panelGrid>
+
+      <p:panelGrid id="panelAcoes" columns="1" layout="grid">
+        <h:panelGroup>
+          <p:commandButton title="Aplicar filtro" value="Aplicar filtro" icon="fa fa-check" action="#{satisfacaoBean.aplicarFiltro()}"
+            update="tbAvaliacoes messages" />
+          <p:spacer />
+        </h:panelGroup>
+      </p:panelGrid>
+
+      <p:divider />
+
+      <p:dataTable id="tbAvaliacoes" var="avaliacao" value="#{satisfacaoBean.avaliacoes}" paginatorPosition="bottom" paginator="true" rows="5"
+        rowKey="#{avaliacao.id}" reflow="true">
+
+        <p:column headerText="Turma">
+          <h:outputText value="#{avaliacao.link.turma.nome}" />
+        </p:column>
+
+        <p:column headerText="Ano.Período">
+          <h:outputText value="#{avaliacao.link.turma.anoPeriodo}" />
+        </p:column>
+
+        <p:column headerText="Data da aula">
+          <h:outputText value="#{avaliacao.link.dataAula}">
+            <f:convertDateTime pattern="dd/MM/yyyy"/>
+          </h:outputText>
+        </p:column>
+
+        <p:column headerText="Aluno">
+          <h:outputText value="#{avaliacao.descAluno}" />
+        </p:column>
+
+        <p:column headerText="Classificação">
+          <p:rating value="#{avaliacao.nota}" cancel="false" readonly="true" />
+        </p:column>
+
+        <p:column headerText="Satisfação">
+          <p:rating value="#{avaliacao.retornoAzure.scoreNormalizado}" cancel="false" readonly="true" />
+        </p:column>
+
+        <p:column headerText="Ações">
+          <p:commandButton title="Exibir detalhes" icon="fa fa-search" oncomplete="PF('dlgDetalheAvaliacao').show()" update="dlgDetalheAvaliacao">
+            <f:setPropertyActionListener value="#{avaliacao}" target="#{satisfacaoBean.avaliacaoSelecionada}" />
+          </p:commandButton>
+        </p:column>
+
+      </p:dataTable>
+    </h:form>
+
+    <p:dialog header="Detalhes" id="dlgDetalheAvaliacao" widgetVar="dlgDetalheAvaliacao" responsive="true" closeOnEscape="true" modal="true"
+      draggable="false" appendTo="@(body)">
+      <p:scrollPanel mode="native">
+        <h:form id="formDetalheAvaliacao">
+
+          <p:panelGrid layout="grid" columns="2" columnClasses="ui-g-12 ui-md-4 ui-lg-2, ui-g-12 ui-md-8 ui-lg-10">
+            <h:outputText value="Texto" />
+            <h:outputText value="#{satisfacaoBean.avaliacaoSelecionada.texto}" />
+          </p:panelGrid>
+
+          <h:panelGrid columns="2">
+            <p:commandButton icon="fa fa-close" type="button" value="Ok" onclick="PF('dlgDetalheAvaliacao').hide();" />
+          </h:panelGrid>
+
+        </h:form>
+      </p:scrollPanel>
+    </p:dialog>
+
+  </ui:define>
+
+</ui:composition>

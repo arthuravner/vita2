@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="../template/_template.xhtml">
+
+  <ui:define name="titulo">
+    <p:outputPanel>Vita 2.0 teste</p:outputPanel>
+  </ui:define>
+
+  <ui:define name="content">
+
+    <h:form>
+      <div class="card">
+        <p:breadCrumb>
+          <p:menuitem value="Home" action="#" ajax="false" style="font-weight: bold;" />
+        </p:breadCrumb>
+      </div>
+
+      <p:panelGrid columns="1" layout="grid">
+        <p:fieldset legend="Tutorial turmas" toggleable="true" toggleSpeed="500" collapsed="true">
+          <h:form>
+            <p:panelGrid columns="1" layout="grid">
+              <p:card>
+                <p:graphicImage library="img" name="ajuda/botoes_turmas.png" />
+                <p>Em "Turmas" é possível fazer todo o gerenciamento das turmas e dos links das pesquisas de satisfação</p>
+                <p>É permitido buscar as turmas por "Nome", "Ano" e "Período"</p>
+                <p>Para buscar basta preencher os campo desejados e "Aplicar filtro"</p>
+                <p>Para criar uma nova turma, "Nova turma"</p>
+              </p:card>
+              <p:card>
+                <p:graphicImage library="img" name="ajuda/acoes_turmas.png" />
+                <p>Para cada turma é possível gerenciar os links de pesquisa de satisfação e, editar e excluir a turma</p>
+                <p>Para gerenciar os links de pesquisa de satisfação basta clicar no primeiro botão de ação</p>
+                <p>Para editar uma turma, clicar no segundo botão de ação</p>
+                <p>Para excluir uma turma, clicar no terceiro botão de ação</p>
+              </p:card>
+              <p:card>
+                <p:graphicImage library="img" name="ajuda/botoes_links.png" />
+                <p>Após criar uma turma é possível gerar um link de pesquisa de satisfação clicando em "Novo link"</p>
+                <p>É possível buscar os links já criados filtrando por descrição e "Aplicar filtro"</p>
+              </p:card>
+              <p:card>
+                <p:graphicImage library="img" name="ajuda/cadastro_link.png" />
+                <p>A "Data de validade" é para indicar até quando o link ficará disponível</p>
+                <p>Ao "Exigir identificação" o aluno deverá se identificar ao responder a pesquisa</p>
+                <p>Ao gerar o link essa tela será fechada e o link será exibido como primeiro item do grid</p>
+              </p:card>
+              <p:card>
+                <p:graphicImage library="img" name="ajuda/colunas_links.png" />
+                <p>A coluna "Validade" indica até quando o link estará disponível</p>
+                <p>O botão "Copiar link" copia o link da pesquisa de satisfação para ser repassado aos alunos</p>
+                <p>A coluna "Resposta" indica a quantidade de alunos que já responderam a pesquisa</p>
+                <p>O primeiro botão de ação edita o link</p>
+                <p>O segundo botão de ação direciona o usuário para a página "Satisfação", onde é possível ver os resultados da pesquisa</p>
+              </p:card>
+            </p:panelGrid>
+          </h:form>
+        </p:fieldset>
+        <p:fieldset legend="Tutorial satisfação" toggleable="true" toggleSpeed="500" collapsed="true">
+          <h:form>
+            <p:panelGrid columns="1" layout="grid">
+              <p:card>
+                <p:graphicImage library="img" name="ajuda/filtro_satisfacao.png" />
+                <p>É necessário selecionar um link de pesquisa de satisfação para a aplicar o filtro.</p>
+                <p>Após aplicar o filtro os resultados da pesquisa serão exibidos para aquele link</p>
+              </p:card>
+              <p:card>
+                <p:graphicImage library="img" name="ajuda/colunas_avaliacao.png" />
+                <p>A classificação indica a nota dada pelo aluno para a aula</p>
+                <p>A satisfação indica o quão satisfeito o aluno está co ma aula</p>
+                <p>O índice de satisfação é obtido a partir da análise de sentimento do comentário feito pelo aluno sobre a aula</p>
+                <p>O botão de detalhe permite visualizar o texto do comentário</p>
+              </p:card>
+            </p:panelGrid>
+          </h:form>
+        </p:fieldset>
+        <p:fieldset legend="Tutorial dashboard" toggleable="true" toggleSpeed="500" collapsed="true">
+          <h:form>
+            <p:panelGrid columns="1" layout="grid">
+              <p:card>
+                <p:graphicImage library="img" name="ajuda/filtro_dashboard.png" />
+                <p>Na página "Dashboard" é possível visualizar os resultados das pesquisas de uma turma em forma de gráficos</p>
+                <p>No filtro basta selecionar a turma e "Aplicar filtro"</p>
+              </p:card>
+            </p:panelGrid>
+          </h:form>
+        </p:fieldset>
+      </p:panelGrid>
+
+
+
+    </h:form>
+  </ui:define>
+
+</ui:composition>
