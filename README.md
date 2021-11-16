@@ -1,6 +1,6 @@
 <h1 align="center"> Vita 2.0 - Código Fonte </h1>
 
-<h2 align="center"> Neste repositório encontram-se o código fonte da aplicação web Vita 2.0. </h2>
+<h2 align="center"> Neste repositório encontra-se o código fonte da aplicação web Vita 2.0. </h2>
 <p align="center"> Esta aplicação foi uma proposta apresentada no projeto final de conclusão de curso descrito a seguir, com o intuito de auxiliar professores a identificarem possiveis causas da evasão de alunos de suas instituições de ensino. </p>
 
 Centro Federal de Educação Tecnológica Celso Suckow da Fonseca </br>
